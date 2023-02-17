@@ -1,0 +1,24 @@
+
+/* Footer */
+.footer {
+	padding-top: 24px;
+	padding-bottom: 24px;
+	background: #212121;
+
+	li {
+		&:nth-of-type(n + 2) {
+			margin-left: 8px;
+		}
+	}
+
+	a {
+		font-size: 18px;
+		color: rgba(255, 255, 255, 0.5);
+		transition: color 0.235s ease-in-out;
+
+		&:focus,
+		&:hover {
+			color: rgba(255, 255, 255, 0.25);
+		}
+	}
+}
