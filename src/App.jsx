@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import './App.scss';
 import CardList from './components/CardList/CardList';
 import Footer from './components/footer/Footer';
@@ -5,6 +6,7 @@ import Header from './components/header/Header';
 
 import Landing from './components/Landing/Landing';
 import Test from './components/Test';
+import TodoItem from './components/TodoItem/TodoItem';
 
 const products = [
 	{
@@ -850,23 +852,88 @@ const products = [
 ];
 
 function App() {
-	const user = {
-		name: 'John',
-		age: 10,
+	const [todos, setTodos] = useState([]);
+
+	const todo = useRef();
+
+	const todoItem = useRef();
+
+	const submitHandler = (evt) => {
+		evt.preventDefault();
+
+		setTodos([
+			...todos,
+			{
+				name: todo.current.value,
+				id: todos.length > 0 ? todos.length : 0,
+				completed: false,
+			},
+		]);
+
+		todo.current.value = '';
+
+		// setTodo('');
+	};
+
+	const deleteHandler = (id) => {
+		const result = todos.filter((todo) => {
+			if (todo.id !== id) {
+				return todo;
+			}
+		});
+
+		setTodos(result);
+	};
+
+	const completeHandler = (id) => {
+		const result = todos.map((todo) => {
+			if (todo.id === id) {
+				todo.completed = !todo.completed;
+			}
+
+			return todo;
+		});
+
+		setTodos(result);
 	};
 
 	return (
 		<div className='container'>
 			<Header></Header>
 
-			<Test test="test"/>
-			<p className='text-warning'>
-				{user.age > 20
-					? 'Siz voyaga yetgansiz'
-					: 'Siz voyaga yetmagansiz'}
-			</p>
+			<form onSubmit={submitHandler} className='form-control'>
+				<input
+					ref={todo}
+					className='form-control'
+					type='text'
+					placeholder='Add todo'
+					// onChange={(evt) => setTodo(evt.target.value)}
+					// value={todo}
+				/>
+				<button
+					type='submit'
+					className='mt-3 form-control btn btn-outline-info'>
+					Qo'shish
+				</button>
+			</form>
 
-			<CardList title={'Katta sotuvlar'} products={products}></CardList>
+			<ul className='bg-bg-secondary my-5'>
+				{todos.map((todo, i) => (
+					<TodoItem
+						ref={todoItem}
+						key={i}
+						data={todo}
+						deleteTodo={deleteHandler}
+						completeHandler={completeHandler}
+					/>
+				))}
+			</ul>
+
+			{/*
+			<CardList
+				test={test}
+				title={'Katta sotuvlar'}
+				products={products}></CardList> */}
 
 			<Footer />
 		</div>

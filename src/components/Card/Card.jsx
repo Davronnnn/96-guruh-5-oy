@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Card = ({ product }) => {
+const Card = ({ product, test }) => {
 	return (
 		<div className='col-4'>
 			<div className='card'>
@@ -10,7 +10,9 @@ const Card = ({ product }) => {
 					alt={product.name}
 				/>
 				<div className='card-body'>
-					<h5 className='card-title'>{product.name}</h5>
+					<h5 className='card-title'>
+						{product.name} {test}
+					</h5>
 					<p className='card-text'>{product.category}</p>
 					<a href='/' className='btn btn-primary'>
 						{product.price}

@@ -1,7 +1,9 @@
 import React from 'react';
 import Card from '../Card/Card';
 
-const CardList = ({ products, title = 'Title', isLeft }) => {
+const CardList = ({ products, title = 'Title', isLeft, test }) => {
+
+	
 	return (
 		<div className='row my-5'>
 			<h3
@@ -11,7 +13,7 @@ const CardList = ({ products, title = 'Title', isLeft }) => {
 				{title}
 			</h3>
 			{products.map((product, i) => (
-				<Card key={i} product={product} />
+				<Card test={test} key={i} product={product} />
 			))}
 		</div>
 	);
